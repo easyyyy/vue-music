@@ -1,18 +1,23 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <bottom-player></bottom-player>
+    <div class="test"></div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import BottomPlayer from '../components/BottomPlayer/BottomPlayer'
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    BottomPlayer
   }
 }
 </script>
+<style lang="stylus" scoped>
+  .test
+    width 1rem
+    height 1rem
+    background-color black
+</style>
