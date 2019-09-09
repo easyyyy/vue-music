@@ -1,11 +1,34 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-    </div>
     <router-view/>
+    <bottom-player></bottom-player>
   </div>
 </template>
+<script>
+import BottomPlayer from './components/BottomPlayer/BottomPlayer'
+export default {
+  name: 'App',
+  components: {
+    BottomPlayer
+  },
+  data () {
+    return {
+
+    }
+  },
+  methods: {
+    swiperleft: function () {
+      console.log('swiperleft')
+      this.$router.push({ name: 'home' })
+    },
+    swiperright: function () {
+      console.log('swiperright')
+      this.$router.push({ name: 'about' })
+    }
+  }
+
+}
+</script>
 <style lang="stylus">
   .icon {
     width: 1em; height: 1em;

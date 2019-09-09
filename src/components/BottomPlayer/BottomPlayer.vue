@@ -1,8 +1,5 @@
 <template>
     <div class="bottom-player">
-<!--      <aplayer class="bottom-aplayer"-->
-<!--               :music="musicInfo"-->
-<!--      />-->
       <div class="border-player"></div>
       <div class="music-pic">
         <img :src="musicInfo.pic">
@@ -25,11 +22,9 @@
 </template>
 
 <script>
-// import Aplayer from 'vue-aplayer'
 export default {
   name: 'BottomPlayer',
   components: {
-    // Aplayer
   },
   data () {
     return {
