@@ -67,13 +67,14 @@ export default {
 <style lang="stylus" scoped>
   @import "../../assets/styles/mixins.styl"
   .bottom-player
+    position: fixed;
     display: flex;
     flex-direction row
-    position absolute
     left: 0
     bottom: 0
     width: 100%;
     z-index: 9999;
+    background-color white
     .music-pic
       width 1.2rem
       height 1.2rem

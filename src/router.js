@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from './views/Index'
+import PlayListDetail from './views/PlayListDetail'
 
 Vue.use(Router)
 
@@ -14,6 +15,11 @@ export default new Router({
       path: '/index',
       name: 'index',
       component: Index
+    },
+    {
+      path: '/playlist/:id',
+      name: 'playlist',
+      component: PlayListDetail
     }
   ]
 })

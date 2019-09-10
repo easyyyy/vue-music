@@ -1,15 +1,19 @@
 <template>
   <div class="recommend-container">
-    recommend
+    <Banner></Banner>
+    <RecommendArea></RecommendArea>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-
+import Banner from '../Banner/Banner'
+import RecommendArea from '../RecommendArea/RecommendArea'
 export default {
   name: 'Recommend',
   components: {
+    Banner,
+    RecommendArea
   }
 }
 </script>
