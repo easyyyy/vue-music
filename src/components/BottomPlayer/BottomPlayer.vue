@@ -96,6 +96,7 @@ export default {
         height: auto;
     .music-info
       height 1.2rem
+      width 3.5rem
       display flex
       flex-direction column
       .music-title

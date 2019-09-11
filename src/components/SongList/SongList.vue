@@ -1,7 +1,7 @@
 <template>
     <div>
-      <div class="song" v-for="song in playlist" :key="song.id">
-        <div class="song-num">1</div>
+      <div class="song" v-for="(song,index) in playlist" :key="index">
+        <div class="song-num">{{index+1}}</div>
         <div class="song-div">
           <div class="song-info">
             <div class="song-title">{{song.name}}</div>
@@ -26,15 +26,34 @@ export default {
   props: {
     playlist: Array
   },
+  data () {
+    return {
+      playingSongId: 0
+    }
+  },
   methods: {
     clickSongPlay (id) {
+      this.playingSongId = id
       this.$axios('/api/song/url?id=' + id).then(this.clickSongPlaySucc)
     },
     clickSongPlaySucc (res) {
       var url = ''
       url = res.data.data[0].url
+      var picUrl
+      var title
+      var artist
+      for (var i in this.playlist) {
+        if (this.playlist[i].id === this.playingSongId) {
+          picUrl = this.playlist[i].al.picUrl
+          title = this.playlist[i].name
+          artist = this.playlist[i].al.name
+        }
+      }
       var music = {
-        src: url
+        src: url,
+        pic: picUrl,
+        title: title,
+        artist: artist
       }
       this.$store.commit('setMusicInfo', music)
     }
@@ -66,7 +85,7 @@ export default {
           line-height .4rem
         .song-artist-album
           line-height:.4rem
-          font-size .08rem
+          font-size .25rem
           color #808080
       .song-operate
         display flex
