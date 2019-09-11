@@ -28,18 +28,26 @@ export default {
   },
   data () {
     return {
-      musicInfo: {
-        title: 'secret base~君がくれたもの~',
-        artist: 'Silent Siren',
-        src: 'https://m701.music.126.net/20190908134951/dcbd8107b7d7deca91613e210be0a2f3/jdyyaac/0e5c/0308/5352/964cbb346f4b2f75765ad8cddfef5ef7.m4a',
-        pic: 'http://p1.music.126.net/VUVZae4Iz0R8ogx73utGcA==/109951164007486241.jpg?param=130y130'
-      },
       audio: {
         musicPlaying: false,
         defaultMusicVolume: 0.1,
         customMusicVolume: 0
       }
     }
+  },
+  computed: {
+    musicInfo: function () {
+      return this.$store.state.musicInfo
+    }
+  },
+  watch: {
+    musicInfo: function () {
+      this.$nextTick(() => {
+        this.audio.musicPlaying = false
+        this.startPlayOrPause()
+      })
+    },
+    deep: true
   },
   methods: {
     startPlayOrPause () {
@@ -52,6 +60,11 @@ export default {
     },
     // 播放音频
     play () {
+      if (this.audio.customMusicVolume === 0) {
+        this.$refs.bottomAudio.volume = this.audio.defaultMusicVolume
+      } else {
+        this.$refs.bottomAudio.volume = this.audio.customMusicVolume
+      }
       this.$refs.bottomAudio.play()
       this.audio.musicPlaying = true
     },

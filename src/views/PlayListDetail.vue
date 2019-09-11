@@ -1,6 +1,6 @@
 <template>
     <div>
-      <SongList></SongList>
+      <SongList :playlist="playlist"></SongList>
     </div>
 </template>
 
@@ -13,18 +13,32 @@ export default {
   },
   data () {
     return {
-      trackIds: []
+      trackIds: [],
+      playlist: []
     }
   },
   mounted () {
-    this.getPlaylist()
+    this.getPlaylistSongId()
   },
   methods: {
-    getPlaylist () {
-      this.$axios.get('/api/playlist/detail?id=' + this.$route.params.id).then(this.getPlaylistSucc)
+    getPlaylistSongId () {
+      this.$axios.get('/api/playlist/detail?id=' + this.$route.params.id).then(this.getPlaylistSongIdSucc)
+    },
+    getPlaylistSongIdSucc (res) {
+      this.trackIds = res.data.playlist.trackIds
+      var url = '/api/song/detail?ids='
+      for (var i in this.trackIds) {
+        if (this.trackIds.length - 1 > i) {
+          url = url + this.trackIds[i].id + ','
+        } else {
+          url = url + this.trackIds[i].id
+        }
+      }
+      this.$axios.get(url).then(this.getPlaylistSucc)
     },
     getPlaylistSucc (res) {
-      this.trackIds = res.data.playlist.trackIds
+      var songs = res.data.songs
+      this.playlist = songs
     }
   }
 }

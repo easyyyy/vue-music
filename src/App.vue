@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <router-view/>
-    <bottom-player></bottom-player>
+    <keep-alive>
+      <bottom-player></bottom-player>
+    </keep-alive>
   </div>
 </template>
 <script>
@@ -17,14 +19,6 @@ export default {
     }
   },
   methods: {
-    swiperleft: function () {
-      console.log('swiperleft')
-      this.$router.push({ name: 'home' })
-    },
-    swiperright: function () {
-      console.log('swiperright')
-      this.$router.push({ name: 'about' })
-    }
   }
 
 }
