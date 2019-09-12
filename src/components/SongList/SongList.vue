@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="songlist">
       <div class="song" v-for="(song,index) in playlist" :key="index">
         <div class="song-num">{{index+1}}</div>
         <div class="song-div">
@@ -62,6 +62,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+  @import "../../assets/styles/mixins.styl"
+  .songlist
+    margin-top 5.5rem
   .song
     display flex
     flex-direction row
@@ -87,6 +90,7 @@ export default {
           line-height:.4rem
           font-size .25rem
           color #808080
+          ellipse()
       .song-operate
         display flex
         flex-direction row

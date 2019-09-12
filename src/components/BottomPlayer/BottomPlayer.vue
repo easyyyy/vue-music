@@ -15,7 +15,7 @@
         <span class="iconfont" v-if="audio.musicPlaying">&#xe619;</span>
         <span class="iconfont" v-else>&#xe617;</span>
       </div>
-      <div class="song-list">
+      <div class="song-list" @click="clickPlaylistTest">
         <span class="iconfont">&#xe61b;</span>
       </div>
     </div>
@@ -50,12 +50,20 @@ export default {
     deep: true
   },
   methods: {
+    // checkEnd () {
+    //   this.$refs.bottomAudio.addEventListener('ended', this.setMusicPlaying(false), false)
+    // },
+    // setMusicPlaying (flag) {
+    //   this.audio.musicPlaying = flag
+    //   console.log('end')
+    // },
     startPlayOrPause () {
       if (this.audio.customMusicVolume === 0) {
         this.$refs.bottomAudio.volume = this.audio.defaultMusicVolume
       } else {
         this.$refs.bottomAudio.volume = this.audio.customMusicVolume
       }
+      // this.checkEnd()
       return this.audio.musicPlaying ? this.pause() : this.play()
     },
     // 播放音频
@@ -72,6 +80,11 @@ export default {
     pause () {
       this.$refs.bottomAudio.pause()
       this.audio.musicPlaying = false
+    },
+
+    clickPlaylistTest () {
+      // this.$refs.bottomAudio.src = 'http://m7.music.126.net/20190911205538/35b656fb70c06c4ace94de2844f4d376/ymusic/005c/0652/065c/76b9806e9b18362b7fe91691a4986d4c.mp3'
+      // this.$refs.bottomAudio.play()
     }
   }
 }

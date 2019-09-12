@@ -1,5 +1,31 @@
 <template>
     <div>
+      <div class="playlist-header" v-show="showAbs">
+        <div class="back">
+          <span class="iconfont">&#xe626;</span>
+        </div>
+        <div class="playlist-text">歌单</div>
+      </div>
+      <div class="playlist-info" ref="playlistInfo">
+        <div class="background">
+          <img :src="playlistInfo.coverImgUrl" alt="">
+        </div>
+        <div class="info">
+          <div class="playlist-img">
+            <img :src="playlistInfo.coverImgUrl">
+          </div>
+          <div class="playlist-title">{{playlistInfo.name}}</div>
+        </div>
+      </div>
+      <div class="playAll-collection">
+        <div class="playAll">
+          <span class="iconfont">&#xe601;</span>
+          <div>
+            播放全部
+          </div>
+        </div>
+        <div class="collection">收藏</div>
+      </div>
       <SongList :playlist="playlist"></SongList>
     </div>
 </template>
@@ -14,17 +40,32 @@ export default {
   data () {
     return {
       trackIds: [],
-      playlist: []
+      playlist: [],
+      playlistInfo: {},
+      showAbs: true,
+      opacityStyle: {
+        opacity: 0
+      }
     }
   },
   mounted () {
     this.getPlaylistSongId()
+    window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
+    handleScroll () {
+      const top = document.documentElement.scrollTop
+      if (top > 200) {
+        this.showAbs = false
+      } else {
+        this.showAbs = true
+      }
+    },
     getPlaylistSongId () {
       this.$axios.get('/api/playlist/detail?id=' + this.$route.params.id).then(this.getPlaylistSongIdSucc)
     },
     getPlaylistSongIdSucc (res) {
+      this.playlistInfo = res.data.playlist
       this.trackIds = res.data.playlist.trackIds
       var url = '/api/song/detail?ids='
       for (var i in this.trackIds) {
@@ -44,6 +85,84 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="stylus" scoped>
+  .playlist-header
+    width: 100%
+    height .8rem
+    display flex
+    flex-direction row
+    position fixed
+    top 0
+    left 0
+    right 0
+    z-index 10
+    .back
+      color white
+      line-height .8rem
+      margin-left .25rem
+      span
+        font-size .4rem
+    .playlist-text
+      margin-left .3rem
+      line-height .8rem
+      font-size .35rem
+      color white
+  .playlist-info
+    z-index 1
+    .background
+      img
+        position: absolute;
+        height: 5rem;
+        width: 100%;
+        top: 0;
+        -webkit-filter: blur(40px);
+        filter: blur(40px);
+    .info
+      position absolute
+      display flex
+      flex-direction row
+      z-index 5
+      top: 1.2rem
+      .playlist-img
+        width 2rem
+        margin-left .6rem
+        margin-top .4rem
+        img
+          height 2.5rem
+          width 2.5rem
+      .playlist-title
+        margin-top: .6rem
+        margin-left .7rem
+        margin-right .3rem
+        font-weight bold
+        font-size .35rem
+        color white
+  .playAll-collection
+    top 5.2rem
+    border-top-left-radius .3rem
+    border-top-right-radius .3rem
+    flex-direction row
+    display flex
+    position relative
+    width 100%
+    height .8rem
+    .playAll
+      width 70%
+      line-height .8rem
+      text-align center
+      font-size .3rem
+      display flex
+      flex-direction row
+      span
+        font-size .5rem
+        margin-right .2rem
+        margin-left   1.2rem
+    .collection
+      border-top-right-radius .3rem
+      background-color #C20C0C
+      width 30%
+      text-align center
+      line-height .8rem
+      font-size .3rem
+      color white
 </style>
