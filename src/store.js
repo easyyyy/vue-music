@@ -5,22 +5,31 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    musicInfo: []
+    musicInfo: {},
+    playlist: []
   },
   mutations: {
+    setMusicInfoAndPlaylist (state, m) {
+      state.musicInfo = m
+      state.playlist.unshift(m)
+    },
     setMusicInfo (state, m) {
       state.musicInfo = m
     },
-    setMusicPlaying (state, flag) {
-      state.musicInfo.musicPlaying = flag
+    setMusicPlaylist (state, m) {
+      state.musicInfo = m[0]
+      state.playlist = m
     }
   },
   actions: {
+    setMusicInfoAndPlaylist (context, musicInfo) {
+      context.commit('setMusicInfoAndPlaylist', musicInfo)
+    },
     setMusicInfo (context, musicInfo) {
       context.commit('setMusicInfo', musicInfo)
     },
-    setMusicPlaying (context, flag) {
-      context.commit('setMusicPlaying', flag)
+    setMusicPlaylist (context, playlist) {
+      context.commit('setMusicPlaylist', playlist)
     }
   }
 })

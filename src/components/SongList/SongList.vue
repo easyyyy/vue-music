@@ -46,7 +46,7 @@ export default {
         if (this.playlist[i].id === this.playingSongId) {
           picUrl = this.playlist[i].al.picUrl
           title = this.playlist[i].name
-          artist = this.playlist[i].al.name
+          artist = this.playlist[i].ar[0].name
         }
       }
       var music = {
@@ -55,7 +55,7 @@ export default {
         title: title,
         artist: artist
       }
-      this.$store.commit('setMusicInfo', music)
+      this.$store.dispatch('setMusicInfoAndPlaylist', music)
     }
   }
 }

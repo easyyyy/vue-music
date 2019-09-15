@@ -1,33 +1,36 @@
 <template>
-    <div class="bottom-player">
-      <div class="border-player"></div>
-      <div class="music-pic">
-        <img :src="musicInfo.pic">
-      </div>
-      <div class="music-info">
-        <span class="music-title">{{musicInfo.title}}</span>
-        <div class="music-artist">
-          <span>{{musicInfo.artist}}</span>
-        </div>
-      </div>
-      <audio ref="bottomAudio" :src="musicInfo.src"></audio>
-      <div class="playSymbol" @click="startPlayOrPause">
-        <span class="iconfont" v-if="audio.musicPlaying">&#xe619;</span>
-        <span class="iconfont" v-else>&#xe617;</span>
-      </div>
-      <div class="song-list" @click="clickPlaylistTest">
-        <span class="iconfont">&#xe61b;</span>
+  <div class="bottom-player">
+    <div class="border-player"></div>
+    <div class="music-pic">
+      <img :src="musicInfo.pic">
+    </div>
+    <div class="music-info">
+      <span class="music-title">{{musicInfo.title}}</span>
+      <div class="music-artist">
+        <span>{{musicInfo.artist}}</span>
       </div>
     </div>
+    <audio ref="bottomAudio" :src="musicInfo.src"></audio>
+    <div class="playSymbol" @click="startPlayOrPause">
+      <span class="iconfont" v-if="audio.musicPlaying">&#xe619;</span>
+      <span class="iconfont" v-else>&#xe617;</span>
+    </div>
+    <div class="song-list" @click="clickPlaylistTest">
+      <span class="iconfont">&#xe61b;</span>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'BottomPlayer',
+  name: 'BottomPlayerV2',
   components: {
   },
   data () {
     return {
+      tag: 0,
+      playingSong: {},
+      playlist: [],
       audio: {
         musicPlaying: false,
         defaultMusicVolume: 0.1,
@@ -38,6 +41,10 @@ export default {
   computed: {
     musicInfo: function () {
       return this.$store.state.musicInfo
+    },
+    // eslint-disable-next-line vue/no-dupe-keys
+    playlistX: function () {
+      return this.$store.state.playlist
     }
   },
   watch: {
@@ -47,14 +54,21 @@ export default {
         this.startPlayOrPause()
       })
     },
+    playlistX: function () {
+      this.tag = 0
+    },
     deep: true
   },
   methods: {
     checkEnd () {
-      this.$refs.bottomAudio.addEventListener('ended', this.setMusicPlayingFalse, false)
+      this.$refs.bottomAudio.addEventListener('ended', this.musicPlayingEnd, false)
     },
-    setMusicPlayingFalse () {
+    musicPlayingEnd () {
       this.audio.musicPlaying = false
+      this.tag = this.tag + 1
+      var nextSong = this.playlistX[this.tag]
+      this.$store.dispatch('setMusicInfo', nextSong)
+      this.startPlayOrPause()
     },
     startPlayOrPause () {
       if (this.audio.customMusicVolume === 0) {

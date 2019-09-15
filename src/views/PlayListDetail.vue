@@ -20,7 +20,7 @@
       <div class="playAll-collection">
         <div class="playAll">
           <span class="iconfont">&#xe601;</span>
-          <div>
+          <div @click="playAll">
             播放全部
           </div>
         </div>
@@ -80,6 +80,37 @@ export default {
     getPlaylistSucc (res) {
       var songs = res.data.songs
       this.playlist = songs
+    },
+    playAll () {
+      var ids = ''
+      for (var i in this.trackIds) {
+        if (i < this.trackIds.length - 1) {
+          ids = ids + this.trackIds[i].id + ','
+        } else {
+          ids = ids + this.trackIds[i].id
+        }
+      }
+      this.$axios('/api/song/url?id=' + ids).then(this.playAllSucc)
+    },
+    playAllSucc (res) {
+      var data = res.data.data
+      var songList = []
+      for (var i in this.playlist) {
+        var src = ''
+        for (var d in data) {
+          if (data[d].id === this.playlist[i].id) {
+            src = data[d].url
+          }
+        }
+        var music = {
+          src: src,
+          pic: this.playlist[i].al.picUrl,
+          title: this.playlist[i].name,
+          artist: this.playlist[i].ar[0].name
+        }
+        songList.push(music)
+      }
+      this.$store.dispatch('setMusicPlaylist', songList)
     }
   }
 }

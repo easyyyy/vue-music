@@ -2,16 +2,18 @@
   <div id="app">
     <router-view/>
     <keep-alive>
-      <bottom-player></bottom-player>
+      <BottomPlayerV2></BottomPlayerV2>
     </keep-alive>
   </div>
 </template>
 <script>
 import BottomPlayer from './components/BottomPlayer/BottomPlayer'
+import BottomPlayerV2 from './components/BottomPlayer/BottomPlayerV2'
 export default {
   name: 'App',
   components: {
-    BottomPlayer
+    BottomPlayer,
+    BottomPlayerV2
   },
   data () {
     return {
