@@ -1,9 +1,9 @@
 <template>
     <div>
       <div class="playlist-header" v-show="showAbs">
-        <div class="back">
+        <router-link tag="div" to="/" class="back">
           <span class="iconfont">&#xe626;</span>
-        </div>
+        </router-link>
         <div class="playlist-text">歌单</div>
       </div>
       <div class="playlist-info" ref="playlistInfo">

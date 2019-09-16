@@ -8,11 +8,11 @@
         <span>Music</span>
       </div>
     </div>
-    <div class="nav-tabs">
-      <div class="tab-container" @click = "clickTab($event)" id="recommend" ref="recommend">推荐</div>
-      <div class="tab-container" @click = "clickTab($event)" id="ranking" ref="ranking">排行榜</div>
-      <div class="tab-container" @click = "clickTab($event)" id="search" ref="search"> 搜索</div>
-    </div>
+<!--    <div class="nav-tabs">-->
+<!--      <div class="tab-container" @click = "clickTab($event)" id="recommend" ref="recommend">推荐</div>-->
+<!--      <div class="tab-container" @click = "clickTab($event)" id="ranking" ref="ranking">排行榜</div>-->
+<!--      <div class="tab-container" @click = "clickTab($event)" id="search" ref="search"> 搜索</div>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
     }
   },
   mounted () {
-    document.getElementById('recommend').style.color = 'red'
+    // document.getElementById('recommend').style.color = 'red'
   },
   watch: {
   },
@@ -67,6 +67,7 @@ export default {
         margin-left .2rem
         font-size .35rem
         font-family: 'Montserrat', sans-serif;
+        /*
     .nav-tabs
       width 100%
       height .8rem
@@ -76,5 +77,5 @@ export default {
         width 33.3%
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: center;*/
 </style>

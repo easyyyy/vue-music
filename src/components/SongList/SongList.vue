@@ -11,9 +11,14 @@
             <div class="play-icon" @click="clickSongPlay(song.id)">
               <span class="iconfont">&#xe601;</span>
             </div>
-            <div class="more-button">
+            <div class="more-button" @click="moreButton">
               <span class="iconfont">&#xe67f;</span>
             </div>
+            <van-action-sheet
+              v-model="show"
+              :actions="actions"
+              @select="onSelect"
+            ></van-action-sheet>
           </div>
         </div>
       </div>
@@ -21,6 +26,7 @@
 </template>
 
 <script>
+import { Toast } from 'vant'
 export default {
   name: 'SongList',
   props: {
@@ -28,13 +34,27 @@ export default {
   },
   data () {
     return {
-      playingSongId: 0
+      playingSongId: 0,
+      show: false,
+      actions: [
+        { name: '选项' },
+        { name: '选项' },
+        { name: '选项', subname: '描述信息' }
+      ]
     }
   },
   methods: {
     clickSongPlay (id) {
       this.playingSongId = id
       this.$axios('/api/song/url?id=' + id).then(this.clickSongPlaySucc)
+    },
+    moreButton () {
+      this.show = true
+    },
+    onSelect (item) {
+      // 点击选项时默认不会关闭菜单，可以手动关闭
+      this.show = false
+      Toast(item.name)
     },
     clickSongPlaySucc (res) {
       var url = ''
