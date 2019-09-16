@@ -28,6 +28,8 @@ export default {
   },
   data () {
     return {
+      timeNow: '',
+      timeDuration: '',
       tag: 0,
       playingSong: {},
       playlist: [],
@@ -48,6 +50,12 @@ export default {
     }
   },
   watch: {
+    timeNow: function () {
+      console.log(this.timeNow)
+    },
+    timeDuration: function () {
+      console.log(this.timeDuration)
+    },
     musicInfo: function () {
       this.$nextTick(() => {
         this.audio.musicPlaying = false
@@ -59,7 +67,33 @@ export default {
     },
     deep: true
   },
+  mounted () {
+    this.addEventListeners()
+  },
+  beforeDestroyed () {
+    this.removeEventListeners()
+  },
   methods: {
+    // 加入监听事件 监听音乐播放时间，音乐时长
+    addEventListeners: function () {
+      const self = this
+      self.$refs.bottomAudio.addEventListener('timeupdate', self._currentTime)
+      self.$refs.bottomAudio.addEventListener('canplay', self._durationTime)
+    },
+    removeEventListeners: function () {
+      const self = this
+      self.$refs.bottomAudio.removeEventListener('timeupdate', self._currentTime)
+      self.$refs.bottomAudio.removeEventListener('canplay', self._durationTime)
+    },
+    // 获取当前音乐播放时间，音乐时长
+    _currentTime: function () {
+      const self = this
+      self.timeNow = parseInt(self.$refs.bottomAudio.currentTime)
+    },
+    _durationTime: function () {
+      const self = this
+      self.timeDuration = parseInt(self.$refs.bottomAudio.duration)
+    },
     checkEnd () {
       this.$refs.bottomAudio.addEventListener('ended', this.musicPlayingEnd, false)
     },
@@ -98,6 +132,10 @@ export default {
     clickPlaylistTest () {
       // this.$refs.bottomAudio.src = 'http://m7.music.126.net/20190911205538/35b656fb70c06c4ace94de2844f4d376/ymusic/005c/0652/065c/76b9806e9b18362b7fe91691a4986d4c.mp3'
       // this.$refs.bottomAudio.play()
+      // 测试指定时间播放
+      var audio = this.$refs.bottomAudio
+      audio.currentTime = 100
+      audio.play()
     }
   }
 }
