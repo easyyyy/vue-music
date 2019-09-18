@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     musicInfo: {},
-    playlist: []
+    playlist: [],
+    PlayerMainShow: false
   },
   mutations: {
     setMusicInfoAndPlaylist (state, m) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     setMusicPlaylist (state, m) {
       state.musicInfo = m[0]
       state.playlist = m
+    },
+    setPlayerMainShow (state, m) {
+      state.PlayerMainShow = m
     }
   },
   actions: {
@@ -30,6 +34,9 @@ export default new Vuex.Store({
     },
     setMusicPlaylist (context, playlist) {
       context.commit('setMusicPlaylist', playlist)
+    },
+    setPlayerMainShow (context, showBool) {
+      context.commit('setPlayerMainShow', showBool)
     }
   }
 })

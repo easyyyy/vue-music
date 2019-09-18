@@ -106,6 +106,7 @@ export default {
         margin-left .2rem
         .song-title
           line-height .4rem
+          ellipse()
         .song-artist-album
           line-height:.4rem
           font-size .25rem

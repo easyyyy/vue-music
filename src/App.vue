@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <router-view/>
-    <keep-alive>
+    <transition name="van-slide-down">
+      <router-view v-show="!this.$store.state.PlayerMainShow"/>
+    </transition>
+      <keep-alive>
       <BottomPlayerV2></BottomPlayerV2>
     </keep-alive>
   </div>
