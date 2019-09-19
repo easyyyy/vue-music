@@ -46,7 +46,24 @@
             width="5rem"
             height="5rem"
             :src="musicInfo.pic"
+            :style="'transform:rotate(' + timeNow +'deg);'"
           />
+        </div>
+        <div class="processBar">
+          <div class="process-time">{{processTimeNow}}</div>
+          <div class="processBar-item">
+            <div class="space-div"></div>
+            <van-slider v-model="rate" @change="onProcessBarChange" />
+          </div>
+          <div class="process-time">{{processTimeDuration}}</div>
+        </div>
+        <div class="player-operate">
+          <div @click="onPreviousSong"><span class="iconfont">&#xe602;</span></div>
+          <div  @click="startPlayOrPause">
+            <span class="iconfont" v-if="audio.musicPlaying">&#xe60b;</span>
+            <span class="iconfont" v-else>&#xe75e;</span>
+          </div>
+          <div @click="onNextSong"><span class="iconfont">&#xe760;</span></div>
         </div>
       </div>
     </transition>
@@ -60,6 +77,7 @@ export default {
   },
   data () {
     return {
+      processValue: 50,
       PlayerMainShow: false,
       rate: 0,
       currentRate: 0,
@@ -78,6 +96,54 @@ export default {
     }
   },
   computed: {
+    processTimeDuration () {
+      var min = '00'
+      var sec = '00'
+      var total = '00:00'
+      if (this.timeDuration >= 60) {
+        min = parseInt(this.timeDuration / 60)
+        sec = parseInt(this.timeDuration % 60)
+        if (sec < 10) {
+          sec = '0' + sec
+        }
+        if (this.timeNow >= 600) {
+          total = min + ':' + sec
+        } else {
+          total = '0' + min + ':' + sec
+        }
+      } else if (this.timeDuration < 60 && this.timeDuration > 0) {
+        sec = parseInt(this.timeDuration % 60)
+        if (sec < 10) {
+          sec = '0' + sec
+        }
+        total = min + ':' + sec
+      }
+      return total
+    },
+    processTimeNow () {
+      var min = '00'
+      var sec = '00'
+      var total = '00:00'
+      if (this.timeNow >= 60) {
+        min = parseInt(this.timeNow / 60)
+        sec = parseInt(this.timeNow % 60)
+        if (sec < 10) {
+          sec = '0' + sec
+        }
+        if (this.timeNow >= 600) {
+          total = min + ':' + sec
+        } else {
+          total = '0' + min + ':' + sec
+        }
+      } else if (this.timeNow < 60 && this.timeNow > 0) {
+        sec = parseInt(this.timeNow % 60)
+        if (sec < 10) {
+          sec = '0' + sec
+        }
+        total = min + ':' + sec
+      }
+      return total
+    },
     musicInfo: function () {
       return this.$store.state.musicInfo
     },
@@ -126,12 +192,10 @@ export default {
     this.removeEventListeners()
   },
   methods: {
-    onClickLeft () {
-      this.PlayerMainShow = false
-      this.$store.dispatch('setPlayerMainShow', this.PlayerMainShow)
-    },
-    onClickRight () {
-      // Toast('按钮')
+    onProcessBarChange (value) {
+      var targetTime = parseInt((value / 100) * this.timeDuration)
+      this.$refs.bottomAudio.currentTime = targetTime
+      this.$refs.bottomAudio.play()
     },
     setPlayerMainShow () {
       this.PlayerMainShow = !this.PlayerMainShow
@@ -151,7 +215,7 @@ export default {
     // 获取当前音乐播放时间，音乐时长
     _currentTime: function () {
       const self = this
-      self.timeNow = parseInt(self.$refs.bottomAudio.currentTime)
+      self.timeNow = parseFloat(self.$refs.bottomAudio.currentTime)
       this.rate = parseInt(self.$refs.bottomAudio.currentTime * 100 / this.timeDuration)
     },
     _durationTime: function () {
@@ -160,6 +224,24 @@ export default {
     },
     checkEnd () {
       this.$refs.bottomAudio.addEventListener('ended', this.musicPlayingEnd, false)
+    },
+    onPreviousSong () {
+      if (this.tag - 1 > -1) {
+        this.tag = this.tag - 1
+        var nextSong = this.playlistX[this.tag]
+        this.$store.dispatch('setMusicInfo', nextSong)
+      } else {
+        this.$toast('没有上一首')
+      }
+    },
+    onNextSong () {
+      if (this.tag + 1 < this.playlistX.length) {
+        this.tag = this.tag + 1
+        var nextSong = this.playlistX[this.tag]
+        this.$store.dispatch('setMusicInfo', nextSong)
+      } else {
+        this.$toast('没有下一首')
+      }
     },
     musicPlayingEnd () {
       this.audio.musicPlaying = false
@@ -302,4 +384,45 @@ export default {
       text-align center
       .playerMain-pic
         margin-top 2rem
+    .processBar
+      width 100%
+      height 1rem
+      z-index:20
+      position fixed
+      top 10.3rem
+      text-align center
+      display flex
+      flex-direction row
+      .processBar-item
+        display flex
+        flex-direction column
+        line-height 1rem
+        height 1rem
+        width 70%
+        margin-left .2rem
+        margin-right .2rem
+        .space-div
+          height .5rem
+        .van-slider
+          line-height .5rem
+          height 2px
+      .process-time
+        margin-left .2rem
+        margin-right .2rem
+        line-height 1rem
+    .player-operate
+      width 100%
+      height 30%
+      z-index:20
+      position fixed
+      top 11.3rem
+      text-align center
+      display flex
+      flex-direction row
+      div
+        width 33%
+      span
+        font-size 1rem
+        color: #fff
+        /*font-weight 1*/
 </style>

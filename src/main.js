@@ -11,11 +11,11 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import axios from 'axios'
 import FastClick from 'fastclick'
-import { Tab, Tabs, ActionSheet, Toast, Circle, NavBar, Image } from 'vant'
+import { Tab, Tabs, ActionSheet, Toast, Circle, NavBar, Image, Slider } from 'vant'
 
 Vue.use(Tab).use(Tabs).use(ActionSheet)
 Vue.use(Toast).use(NavBar).use(Image)
-Vue.use(Circle)
+Vue.use(Circle).use(Slider)
 // FastClick的ios点击穿透解决方案
 FastClick.prototype.focus = function (targetElement) {
   let length
