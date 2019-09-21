@@ -343,7 +343,7 @@ export default {
     .circle
       position absolute
       bottom .28rem
-      right 1.95rem
+      left 5rem
   .playerMain
     height 100%
     width 100%
