@@ -1,33 +1,32 @@
 <template>
-  <div class="about">
-<!--    <van-action-sheet-->
-<!--      v-model="show"-->
-<!--      :actions="actions"-->
-<!--      @select="onSelect"-->
-<!--    >sada</van-action-sheet>-->
-    sdafadfsd
+  <div class="ranking-list">
+    <div v-for="item in toplist" :key="item.index">
+      <TopListDetail :item="item"></TopListDetail>
+    </div>
   </div>
 </template>
 
 <script>
-import { Toast } from 'vant'
+import TopListDetail from '../TopListDetail/TopListDetail'
 export default {
   name: 'Index',
+  components: {
+    TopListDetail
+  },
   data () {
     return {
-      show: true,
-      actions: [
-        { name: '选项' },
-        { name: '选项' },
-        { name: '选项', subname: '描述信息' }
-      ]
+      toplist: []
     }
   },
+  mounted () {
+    this.getTopListDetail()
+  },
   methods: {
-    onSelect (item) {
-      // 点击选项时默认不会关闭菜单，可以手动关闭
-      this.show = false
-      Toast(item.name)
+    getTopListDetail () {
+      this.$axios.get('/api/toplist/detail').then(this.getTopListDetailSucc)
+    },
+    getTopListDetailSucc (res) {
+      this.toplist = res.data.list
     }
   }
 }

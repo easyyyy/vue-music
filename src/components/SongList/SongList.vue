@@ -22,6 +22,7 @@
           </div>
         </div>
       </div>
+      <div class="space-div"></div>
     </div>
 </template>
 
@@ -74,6 +75,9 @@ export default {
         pic: picUrl,
         title: title,
         artist: artist
+      }
+      if (url === null) {
+        this.$toast('应版权要求无法播放')
       }
       this.$store.dispatch('setMusicInfoAndPlaylist', music)
     }
@@ -128,4 +132,7 @@ export default {
           span
             font-size .45rem
             color #808080
+  .space-div
+    width 100%
+    height 1rem
 </style>
