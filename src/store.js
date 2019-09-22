@@ -17,6 +17,9 @@ export default new Vuex.Store({
     setMusicInfo (state, m) {
       state.musicInfo = m
     },
+    setMusicInfoPicUrl (state, url) {
+      state.musicInfo.pic = url
+    },
     setMusicPlaylist (state, m) {
       state.musicInfo = m[0]
       state.playlist = m
@@ -31,6 +34,9 @@ export default new Vuex.Store({
     },
     setMusicInfo (context, musicInfo) {
       context.commit('setMusicInfo', musicInfo)
+    },
+    setMusicInfoPicUrl (context, picurl) {
+      context.commit('setMusicInfoPicUrl', picurl)
     },
     setMusicPlaylist (context, playlist) {
       context.commit('setMusicPlaylist', playlist)

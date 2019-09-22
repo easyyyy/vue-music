@@ -5,7 +5,8 @@
         <div class="song-div">
           <div class="song-info">
             <div class="song-title">{{song.name}}</div>
-            <div class="song-artist-album">{{song.ar[0].name}} - {{song.al.name}}</div>
+            <div class="song-artist-album" v-if="song.ar">{{song.ar[0].name}} - {{song.al.name}}</div>
+            <div class="song-artist-album" v-else-if="song.artists">{{song.artists[0].name}} - {{song.album.name}}</div>
           </div>
           <div class="song-operate">
             <div class="play-icon" @click="clickSongPlay(song.id)">
@@ -60,14 +61,24 @@ export default {
     clickSongPlaySucc (res) {
       var url = ''
       url = res.data.data[0].url
+      if (url === null) {
+        this.$toast('应版权要求无法播放')
+        return
+      }
       var picUrl
       var title
       var artist
       for (var i in this.playlist) {
         if (this.playlist[i].id === this.playingSongId) {
-          picUrl = this.playlist[i].al.picUrl
-          title = this.playlist[i].name
-          artist = this.playlist[i].ar[0].name
+          if (this.playlist[i].al) {
+            picUrl = this.playlist[i].al.picUrl
+            title = this.playlist[i].name
+            artist = this.playlist[i].ar[0].name
+          } else {
+            this.getSongDetail(this.playlist[i].id)
+            title = this.playlist[i].name
+            artist = this.playlist[i].artists[0].name
+          }
         }
       }
       var music = {
@@ -76,10 +87,13 @@ export default {
         title: title,
         artist: artist
       }
-      if (url === null) {
-        this.$toast('应版权要求无法播放')
-      }
       this.$store.dispatch('setMusicInfoAndPlaylist', music)
+    },
+    async getSongDetail (id) {
+      await this.$axios.get('/api/song/detail?ids=' + id).then(this.getSongDetailSucc)
+    },
+    getSongDetailSucc (res) {
+      this.$store.dispatch('setMusicInfoPicUrl', res.data.songs[0].al.picUrl)
     }
   }
 }
