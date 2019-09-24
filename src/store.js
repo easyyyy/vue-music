@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     musicInfo: {},
     playlist: [],
-    PlayerMainShow: false
+    PlayerMainShow: false,
+    Tab: ''
   },
   mutations: {
     setMusicInfoAndPlaylist (state, m) {
@@ -26,6 +27,12 @@ export default new Vuex.Store({
     },
     setPlayerMainShow (state, m) {
       state.PlayerMainShow = m
+    },
+    insertPlaylist (state, dict) {
+      state.playlist.splice(dict['index'], 0, dict['item'])
+    },
+    setTab (state, m) {
+      state.Tab = m
     }
   },
   actions: {
@@ -43,6 +50,12 @@ export default new Vuex.Store({
     },
     setPlayerMainShow (context, showBool) {
       context.commit('setPlayerMainShow', showBool)
+    },
+    insertPlaylist (context, dict) {
+      context.commit('insertPlaylist', dict)
+    },
+    setTab (context, tab) {
+      context.commit('setTab', tab)
     }
   }
 })

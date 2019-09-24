@@ -1,9 +1,9 @@
 <template>
     <div>
-      <Header :route-path="this.$route.path" @choiceTab="choiceTab"></Header>
+      <Header :route-path="this.$route.path"></Header>
 <!--      <Recommend v-show="tabState.recommend"></Recommend>-->
 <!--      <RankingList v-show="tabState.ranking"></RankingList>-->
-      <van-tabs v-model="active" animated>
+      <van-tabs v-model="active" animated swipeable @change="onClick">
         <van-tab title="推荐"><Recommend></Recommend></van-tab>
         <van-tab title="排行榜"><RankingList></RankingList></van-tab>
         <van-tab title="搜索"><Search></Search></van-tab>
@@ -26,17 +26,17 @@ export default {
   },
   data () {
     return {
-      tabState: {
-        recommend: true,
-        ranking: false,
-        search: false
-      },
       active: 0
     }
   },
   methods: {
-    choiceTab (event) {
-      this.tabState = event
+    onClick (name, title) {
+      // if (title !== '搜索') {
+      //   window.onscroll = function () {
+      //   }
+      //   console.log(window.onscroll)
+      // }
+      this.$store.dispatch('setTab', title)
     }
   }
 }

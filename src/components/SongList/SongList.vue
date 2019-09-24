@@ -12,7 +12,7 @@
             <div class="play-icon" @click="clickSongPlay(song.id)">
               <span class="iconfont">&#xe601;</span>
             </div>
-            <div class="more-button" @click="moreButton">
+            <div class="more-button" @click="moreButton(index)">
               <span class="iconfont">&#xe67f;</span>
             </div>
             <van-action-sheet
@@ -38,8 +38,9 @@ export default {
     return {
       playingSongId: 0,
       show: false,
+      clickId: 0,
       actions: [
-        { name: '选项' },
+        { name: '添加到下一首播放' },
         { name: '选项' },
         { name: '选项', subname: '描述信息' }
       ]
@@ -50,13 +51,58 @@ export default {
       this.playingSongId = id
       this.$axios('/api/song/url?id=' + id).then(this.clickSongPlaySucc)
     },
-    moreButton () {
+    moreButton (index) {
       this.show = true
+      this.onClickSongOperate(index)
     },
     onSelect (item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
       this.show = false
       Toast(item.name)
+      switch (item.name) {
+        case '添加到下一首播放' :
+          console.log('添加到下一首播放' + this.clickId)
+          this.$axios('/api/song/url?id=' + this.playlist[this.clickId].id).then(this.insertSongPlaySucc)
+          // this.$store.dispatch('insertPlaylist', { item: this.playlist[this.clickId], index: 1 })
+      }
+    },
+    insertSongPlaySucc (res) {
+      var url = ''
+      url = res.data.data[0].url
+      if (url === null) {
+        this.$toast('应版权要求无法播放')
+        return
+      }
+      var picUrl
+      var title
+      var artist
+      var artistId
+      for (var i in this.playlist) {
+        if (this.playlist[i].id === res.data.data[0].id) {
+          if (this.playlist[i].al) {
+            picUrl = this.playlist[i].al.picUrl
+            title = this.playlist[i].name
+            artist = this.playlist[i].ar[0].name
+            artistId = this.playlist[i].ar[0].id
+          } else {
+            this.getSongDetail(this.playlist[i].id)
+            title = this.playlist[i].name
+            artist = this.playlist[i].artists[0].name
+            artistId = this.playlist[i].artists[0].id
+          }
+        }
+      }
+      var music = {
+        src: url,
+        pic: picUrl,
+        title: title,
+        artist: artist,
+        artistId: artistId
+      }
+      this.$store.dispatch('insertPlaylist', { item: music, index: 1 })
+    },
+    onClickSongOperate (index) {
+      this.clickId = index
     },
     clickSongPlaySucc (res) {
       var url = ''
@@ -68,16 +114,19 @@ export default {
       var picUrl
       var title
       var artist
+      var artistId
       for (var i in this.playlist) {
         if (this.playlist[i].id === this.playingSongId) {
           if (this.playlist[i].al) {
             picUrl = this.playlist[i].al.picUrl
             title = this.playlist[i].name
             artist = this.playlist[i].ar[0].name
+            artistId = this.playlist[i].ar[0].id
           } else {
             this.getSongDetail(this.playlist[i].id)
             title = this.playlist[i].name
             artist = this.playlist[i].artists[0].name
+            artistId = this.playlist[i].artists[0].id
           }
         }
       }
@@ -85,7 +134,8 @@ export default {
         src: url,
         pic: picUrl,
         title: title,
-        artist: artist
+        artist: artist,
+        artistId: artistId
       }
       this.$store.dispatch('setMusicInfoAndPlaylist', music)
     },

@@ -106,7 +106,8 @@ export default {
           src: src,
           pic: this.playlist[i].al.picUrl,
           title: this.playlist[i].name,
-          artist: this.playlist[i].ar[0].name
+          artist: this.playlist[i].ar[0].name,
+          artistId: this.playlist[i].ar[0].id
         }
         songList.push(music)
       }
