@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     getHighQualitySongLists () {
-      this.$axios.get('/api/top/playlist?limit=6').then(this.getHighQualitySongListsSucc)
+      this.$axios.get(this.$musicApi + '/top/playlist?limit=6').then(this.getHighQualitySongListsSucc)
     },
     getHighQualitySongListsSucc (res) {
       this.songList = res.data.playlists

@@ -100,7 +100,7 @@ export default {
       this.onSearch()
     },
     onSearch () {
-      this.$axios.get('/api/search?keywords=' + this.value + '&&limit=10&&offset=' + this.offset).then(this.onSearchSucc)
+      this.$axios.get(this.$musicApi + '/search?keywords=' + this.value + '&&limit=10&&offset=' + this.offset).then(this.onSearchSucc)
       this.hotsShow = false
     },
     onCancel () {
@@ -114,7 +114,7 @@ export default {
       this.songCount = res.data.result.songCount
     },
     getSearchHot () {
-      this.$axios.get('/api/search/hot').then(this.getSearchHotSucc)
+      this.$axios.get(this.$musicApi + '/search/hot').then(this.getSearchHotSucc)
     },
     getSearchHotSucc (res) {
       this.hots = res.data.result.hots

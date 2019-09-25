@@ -29,6 +29,7 @@ FastClick.prototype.focus = function (targetElement) {
 }
 FastClick.attach(document.body)
 Vue.prototype.$axios = axios
+Vue.prototype.$musicApi = 'http://47.96.163.127:3000'
 
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueTouch, { name: 'v-touch' })

@@ -49,7 +49,7 @@ export default {
   methods: {
     clickSongPlay (id) {
       this.playingSongId = id
-      this.$axios('/api/song/url?id=' + id).then(this.clickSongPlaySucc)
+      this.$axios(this.$musicApi + '/song/url?id=' + id).then(this.clickSongPlaySucc)
     },
     moreButton (index) {
       this.show = true
@@ -62,7 +62,7 @@ export default {
       switch (item.name) {
         case '添加到下一首播放' :
           console.log('添加到下一首播放' + this.clickId)
-          this.$axios('/api/song/url?id=' + this.playlist[this.clickId].id).then(this.insertSongPlaySucc)
+          this.$axios(this.$musicApi + '/song/url?id=' + this.playlist[this.clickId].id).then(this.insertSongPlaySucc)
           // this.$store.dispatch('insertPlaylist', { item: this.playlist[this.clickId], index: 1 })
       }
     },
@@ -140,7 +140,7 @@ export default {
       this.$store.dispatch('setMusicInfoAndPlaylist', music)
     },
     async getSongDetail (id) {
-      await this.$axios.get('/api/song/detail?ids=' + id).then(this.getSongDetailSucc)
+      await this.$axios.get(this.$musicApi + '/song/detail?ids=' + id).then(this.getSongDetailSucc)
     },
     getSongDetailSucc (res) {
       this.$store.dispatch('setMusicInfoPicUrl', res.data.songs[0].al.picUrl)

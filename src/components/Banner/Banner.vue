@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     getBannerByApi () {
-      this.$axios.get('/api/banner?type=1').then(this.getBannerSucc)
+      this.$axios.get(this.$musicApi + '/banner?type=1').then(this.getBannerSucc)
     },
     getBannerSucc (res) {
       this.bannersData = res.data.banners

@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     getTopListDetail () {
-      this.$axios.get('/api/toplist/detail').then(this.getTopListDetailSucc)
+      this.$axios.get(this.$musicApi + '/toplist/detail').then(this.getTopListDetailSucc)
     },
     getTopListDetailSucc (res) {
       this.toplist = res.data.list

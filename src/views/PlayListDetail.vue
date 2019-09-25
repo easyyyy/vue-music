@@ -62,12 +62,12 @@ export default {
       }
     },
     getPlaylistSongId () {
-      this.$axios.get('/api/playlist/detail?id=' + this.$route.params.id).then(this.getPlaylistSongIdSucc)
+      this.$axios.get(this.$musicApi + '/playlist/detail?id=' + this.$route.params.id).then(this.getPlaylistSongIdSucc)
     },
     getPlaylistSongIdSucc (res) {
       this.playlistInfo = res.data.playlist
       this.trackIds = res.data.playlist.trackIds
-      var url = '/api/song/detail?ids='
+      var url = this.$musicApi + '/song/detail?ids='
       for (var i in this.trackIds) {
         if (this.trackIds.length - 1 > i) {
           url = url + this.trackIds[i].id + ','
@@ -90,7 +90,7 @@ export default {
           ids = ids + this.trackIds[i].id
         }
       }
-      this.$axios('/api/song/url?id=' + ids).then(this.playAllSucc)
+      this.$axios(this.$musicApi + '/song/url?id=' + ids).then(this.playAllSucc)
     },
     playAllSucc (res) {
       var data = res.data.data
