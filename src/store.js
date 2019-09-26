@@ -5,7 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    musicInfo: {},
+    musicInfo: {
+      artist: []
+    },
     playlist: [],
     PlayerMainShow: false,
     Tab: ''

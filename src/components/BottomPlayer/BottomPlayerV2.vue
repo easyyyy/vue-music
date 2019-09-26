@@ -7,8 +7,11 @@
       </div>
       <div class="music-info">
         <span class="music-title">{{musicInfo.title}}</span>
-        <div class="music-artist">
-          <span>{{musicInfo.artist}}</span>
+        <div class="music-artist" v-if="musicInfo.artist.length > 0">
+          <span>{{artistsString(musicInfo.artist)}}</span>
+        </div>
+        <div class="music-artist" v-else>
+          <span>{{musicInfo.artist[0]}}</span>
         </div>
       </div>
       <audio ref="bottomAudio" :src="musicInfo.src"></audio>
@@ -96,6 +99,25 @@ export default {
     }
   },
   computed: {
+    artistsString () {
+      return function (artist) {
+        if (artist.length === 1) {
+          return artist[0].name
+        } else if (artist.length > 1) {
+          var str = ''
+          for (var i in artist) {
+            if (i < artist.length - 1) {
+              str = str + artist[i].name + '/'
+            } else {
+              str = str + artist[i].name
+            }
+          }
+          return str
+        } else {
+          return ''
+        }
+      }
+    },
     processTimeDuration () {
       var min = '00'
       var sec = '00'

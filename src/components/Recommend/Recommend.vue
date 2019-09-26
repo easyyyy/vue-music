@@ -14,6 +14,12 @@ export default {
   components: {
     Banner,
     RecommendArea
+  },
+  data () {
+    return {
+    }
+  },
+  methods: {
   }
 }
 </script>

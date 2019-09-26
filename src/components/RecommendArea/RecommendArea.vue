@@ -11,19 +11,18 @@
           <div>{{s.name}}</div>
         </div>
       </div>
-      <SongList></SongList>
+<!--      <SongList></SongList>-->
     </div>
 </template>
 
 <script>
-import SongList from '../SongList/SongList'
+// import SongList from '../SongList/SongList'
 export default {
   name: 'RecommendArea',
   mounted () {
     this.getHighQualitySongLists()
   },
   components: {
-    SongList
   },
   data () {
     return {

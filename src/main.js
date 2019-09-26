@@ -11,9 +11,9 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import axios from 'axios'
 import FastClick from 'fastclick'
-import { Tab, Tabs, ActionSheet, Toast, Circle, NavBar, Image, Slider, Search, Divider } from 'vant'
+import { Tab, Tabs, ActionSheet, Toast, Circle, NavBar, Image, Slider, Search, Divider, Popup } from 'vant'
 
-Vue.use(Tab).use(Tabs).use(ActionSheet)
+Vue.use(Tab).use(Tabs).use(ActionSheet).use(Popup)
 Vue.use(Toast).use(NavBar).use(Image)
 Vue.use(Circle).use(Slider).use(Search).use(Divider)
 // FastClick的ios点击穿透解决方案
