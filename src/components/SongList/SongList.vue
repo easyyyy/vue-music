@@ -199,7 +199,7 @@ export default {
 <style lang="stylus" scoped>
   @import "../../assets/styles/mixins.styl"
   .songlist
-    margin-top 5.5rem
+    height auto
   .song
     display flex
     flex-direction row

@@ -9,12 +9,10 @@
   </div>
 </template>
 <script>
-import BottomPlayer from './components/BottomPlayer/BottomPlayer'
 import BottomPlayerV2 from './components/BottomPlayer/BottomPlayerV2'
 export default {
   name: 'App',
   components: {
-    BottomPlayer,
     BottomPlayerV2
   },
   data () {

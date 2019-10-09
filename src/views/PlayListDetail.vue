@@ -140,6 +140,7 @@ export default {
       color white
   .playlist-info
     z-index 1
+    height 5rem
     .background
       img
         position: absolute;
@@ -169,7 +170,6 @@ export default {
         font-size .35rem
         color white
   .playAll-collection
-    top 5.2rem
     border-top-left-radius .3rem
     border-top-right-radius .3rem
     flex-direction row

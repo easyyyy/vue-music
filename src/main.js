@@ -12,7 +12,10 @@ import 'swiper/dist/css/swiper.css'
 import axios from 'axios'
 import FastClick from 'fastclick'
 import { Tab, Tabs, ActionSheet, Toast, Circle, NavBar, Image, Slider, Search, Divider, Popup } from 'vant'
+import ElementUI from 'element-ui'
 
+import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(ElementUI)
 Vue.use(Tab).use(Tabs).use(ActionSheet).use(Popup)
 Vue.use(Toast).use(NavBar).use(Image)
 Vue.use(Circle).use(Slider).use(Search).use(Divider)
