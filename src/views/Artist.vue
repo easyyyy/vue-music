@@ -23,8 +23,12 @@
         <el-tab-pane label="热门演唱" name="first">
           <SongList :playlist="hotSongs"></SongList>
         </el-tab-pane>
-        <el-tab-pane label="专辑" name="second">专辑</el-tab-pane>
-        <el-tab-pane label="艺人信息" name="third">艺人信息</el-tab-pane>
+        <el-tab-pane label="专辑" name="second">
+          <AlbumList :artistId="artistId"></AlbumList>
+        </el-tab-pane>
+        <el-tab-pane label="艺人信息" name="third">
+          <ArtistDesc :artistId="artistId"></ArtistDesc>
+        </el-tab-pane>
       </el-tabs>
 <!--      <van-tabs v-model="active" animated swipeable>-->
 <!--        <van-tab title="热门演唱">-->
@@ -40,13 +44,18 @@
 
 <script>
 import SongList from '../components/SongList/SongList'
+import ArtistDesc from '../components/ArtistDesc/ArtistDesc'
+import AlbumList from '../components/AlbumList/AlbumList'
 export default {
   name: 'Artist',
   components: {
-    SongList
+    SongList,
+    ArtistDesc,
+    AlbumList
   },
   data () {
     return {
+      artistId: parseInt(this.$route.params.id),
       NavBarNameShow: false,
       NavBarStyle: {
         opacity: 0
