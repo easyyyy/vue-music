@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="van-slide-down">
-      <router-view v-show="!this.$store.state.PlayerMainShow"/>
+      <router-view v-if="isRouterAlive"/>
     </transition>
       <keep-alive>
       <BottomPlayerV2></BottomPlayerV2>
@@ -15,14 +15,24 @@ export default {
   components: {
     BottomPlayerV2
   },
+  provide () {
+    return {
+      reload: this.reload
+    }
+  },
   data () {
     return {
-
+      isRouterAlive: true
     }
   },
   methods: {
+    reload () {
+      this.isRouterAlive = false
+      this.$nextTick(function () {
+        this.isRouterAlive = true
+      })
+    }
   }
-
 }
 </script>
 <style lang="stylus">

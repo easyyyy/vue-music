@@ -11,12 +11,12 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import axios from 'axios'
 import FastClick from 'fastclick'
-import { Tab, Tabs, ActionSheet, Toast, Circle, NavBar, Image, Slider, Search, Divider, Popup } from 'vant'
+import { Tab, Tabs, ActionSheet, Toast, Circle, NavBar, Image, Slider, Search, Divider, Popup, Button } from 'vant'
 import ElementUI from 'element-ui'
 
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
-Vue.use(Tab).use(Tabs).use(ActionSheet).use(Popup)
+Vue.use(Tab).use(Tabs).use(ActionSheet).use(Popup).use(Button)
 Vue.use(Toast).use(NavBar).use(Image)
 Vue.use(Circle).use(Slider).use(Search).use(Divider)
 // FastClick的ios点击穿透解决方案
@@ -32,7 +32,7 @@ FastClick.prototype.focus = function (targetElement) {
 }
 FastClick.attach(document.body)
 Vue.prototype.$axios = axios
-Vue.prototype.$musicApi = 'http://47.96.163.127:3000'
+Vue.prototype.$musicApi = 'http://207.148.91.159:3000'
 
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueTouch, { name: 'v-touch' })
@@ -41,5 +41,11 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  created () {
+    if (sessionStorage.getItem('vue-music-user') === null) {
+      sessionStorage.setItem('vue-music-user', '')
+    }
+    this.$store.dispatch('setUser', sessionStorage.getItem('vue-music-user'))
+  }
 }).$mount('#app')

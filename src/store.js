@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    user: {},
     musicInfo: {
       artist: []
     },
@@ -35,9 +36,24 @@ export default new Vuex.Store({
     },
     setTab (state, m) {
       state.Tab = m
+    },
+    setUser (state, m) {
+      // if (m === null) {
+      //   state.user = ''
+      // } else {
+      //   state.user = JSON.parse(m)
+      // }
+      if (m !== '') {
+        state.user = JSON.parse(m)
+      } else {
+        state.user = m
+      }
     }
   },
   actions: {
+    setUser (context, user) {
+      context.commit('setUser', user)
+    },
     setMusicInfoAndPlaylist (context, musicInfo) {
       context.commit('setMusicInfoAndPlaylist', musicInfo)
     },

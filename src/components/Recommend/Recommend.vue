@@ -2,6 +2,7 @@
   <div class="recommend-container">
     <Banner></Banner>
     <RecommendArea></RecommendArea>
+    <RecommendArea></RecommendArea>
   </div>
 </template>
 

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Index from './views/Index'
 import PlayListDetail from './views/PlayListDetail'
 import Artist from './views/Artist'
+import User from './views/User'
 import AlbumDetail from './components/AlbumDetail/AlbumDetail'
 
 Vue.use(Router)
@@ -32,6 +33,11 @@ export default new Router({
       path: '/artist/:id',
       name: 'artist',
       component: Artist
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: User
     }
   ]
 })
